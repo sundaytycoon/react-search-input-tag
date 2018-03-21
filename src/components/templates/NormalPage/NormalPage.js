@@ -8,7 +8,6 @@ const NormalPage = ({ header, children }) => (
       <h1>{header.title}</h1>
       <ul className="header-tab">
         <li><Link to={{ pathname: '/', state: {hello: 123123}  }}>MAIN</Link></li>
-        <li><Link to={{ pathname: '/form', state: {hello: 123123}  }}>FORM</Link></li>
       </ul>
     </header>
     <hr/>

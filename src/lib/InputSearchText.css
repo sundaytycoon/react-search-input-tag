@@ -1,3 +1,91 @@
-.gotsu-input-search{
+
+.ist-div{
+
+}
+
+.ist-div .ist-input{
+  
+}
+
+.ist-div .ist-ul{
+
+}
+.ist-div .ist-ul.hide{
+  display: none;
+}
+
+.ist-div .ist-ul .ist-li{
+  
+}
+.ist-div .ist-ul .ist-li.active{
+  background-color: white;
   color: black;
 }
+
+.ist-div .ist-ul .ist-li:hover{
+  background-color: white;
+  color: black;
+}
+.ist-div .ist-ul .ist-li span.match{
+  color:rosybrown;
+}
+
+
+/*
+
+@import 'utils';
+
+.default-search-wrap{
+  width: 100%;
+  display:block;
+  position: relative;
+  & .hide{
+    display:none;
+  }
+
+  .default-search-ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    position: absolute;
+    background-color: white;
+    z-index: 2;
+    border: 1px solid $oc-gray-4;
+    max-height: 200px;
+    overflow-y: auto;
+
+    .default-search-li{
+      width: 100%;
+      font-size: 24px;
+      line-height: 24px;
+      border-bottom: 1px solid $oc-gray-4;
+      padding: 0.5rem;
+      &.active{
+        background: black;
+        color: white;
+      }
+      &.default-search-notfound{
+        color: $oc-gray-7;
+      }
+      &:hover{
+        background: black;
+        color: white;
+        cursor: pointer;
+      }
+      & p {
+        display:inline-block;
+        &.default-search-stress{
+          font-weight: bold;
+          color: $oc-blue-7;
+        }
+      }
+    }
+  }
+}
+.active{
+  background: black;
+  color: white;
+}
+
+*/
