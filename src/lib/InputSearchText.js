@@ -7,42 +7,46 @@ import './InputSearchText.css'
 class InputSearchText extends Component{
   state = {
     itemList: [],
+    findList: [],
     cursor: -2,
   }
 
   componentWillMount() {
     const { itemList } = this.props
-    this.setState({ itemList })
+    this.setState({ itemList, findList: itemList })
   }
 
   onChange = (label) => {
     const { onChange } = this.props
     onChange(label)
+    const findList = this.findList(label)
+    console.log(findList)
     const correct = this.state.itemList.filter(v => v.label === label)
     if (correct.length === 1) {
-      this.setState({ cursor: -2 })
+      this.setState({ cursor: -2, findList })
       this.props.onSelect(correct[0].label, correct[0].value)
       return false
     }
 
     if (!label) {
-      this.setState({ cursor: -2 })
+      this.setState({ cursor: -2, findList })
       return false
     }
-    this.setState({ cursor: -1 })
+    this.setState({ cursor: -1, findList })
     return true
   }
 
   onSelect = (label, value) => {
     const { onSelect } = this.props
     onSelect(label, value)
+    this.setState({ cursor: -2 })
   }
 
   onKeyDown = (event) => {
     const { onKeyDown } = this.props
     const { keyCode } = event
-
-    onKeyDown(event)
+    console.log(this.state.findList)
+    onKeyDown(keyCode)
     if (keyCode === 38) {
       console.log('Up')
       if (this.state.cursor > 0) {
@@ -50,26 +54,14 @@ class InputSearchText extends Component{
       }
     } else if (keyCode === 40) {
       console.log('Down')
-      if (this.state.cursor < (this.findList(this.props.value).length - 1)) {
+      if (this.state.cursor < this.state.findList.length - 1) {
         this.setState({ cursor: this.state.cursor + 1 })
       }
-
-    } else if (keyCode === 37) {
-      console.log('Left')
-
-    } else if (keyCode === 39) {
-      console.log('Right')
-
     } else if (keyCode === 13) {
       console.log('Enter')
-      const searched = this.findList(this.props.value)
-      if (searched.length !== 0 && this.state.cursor !== -2) {
-        this.props.onSelect(searched[this.state.cursor].label, searched[this.state.cursor].value)
+      if (this.state.findList.length !== 0 && this.state.cursor !== -2) {
+        this.props.onSelect(this.state.findList[this.state.cursor].label, this.state.findList[this.state.cursor].value)
       }
-      this.setState({ cursor: -2 })
-
-    } else if (keyCode === 27) {
-      console.log('ESC')
     }
   }
 
@@ -144,7 +136,7 @@ class InputSearchText extends Component{
   }
   onBlur = () => {
     setTimeout(() => {
-      this.setState({ cursor: -2 })
+      this.setState({ cursor: -2  })
     }, 100)
   }
   render() {
@@ -163,7 +155,7 @@ class InputSearchText extends Component{
         <ul
           className={`ist-ul ${this.state.cursor === -2 && 'hide'}`}
         >
-          {this.makeList(this.findList(value))}
+          {this.state.findList}
         </ul>
       </div>
     )
