@@ -40,7 +40,6 @@ class MainPage extends Component{
   render() {
     const { input, itemList } = this.state
     const { searchInput1 } = input
-    console.log(itemList)
     return (
       <NormalPage header={this.header}>
         <h1> getting started `react-input-search` ! </h1>
@@ -49,8 +48,8 @@ class MainPage extends Component{
           <InputSearchText
             id="searchInput1"
             name="searchInput1"
-            itemList={itemList}
             value={searchInput1.label}
+            itemList={itemList}
             onChange={(label) => {
               this.handleChange({ type: 'searchInput1', label})
             }}
@@ -59,6 +58,19 @@ class MainPage extends Component{
             }}
           />
           <span>{searchInput1.value}</span>
+        </div>
+        <div>
+          <p>Hello world</p>
+          <p>Hello world</p>
+          <p>Hello world</p>
+          <p>Hello world</p>
+          <p>Hello world</p>
+          <p>Hello world</p>
+          <p>Hello world</p>
+          <p>Hello world</p>
+          <p>Hello world</p>
+          <p>Hello world</p>
+          <p>Hello world</p>
         </div>
       </NormalPage>
     )
