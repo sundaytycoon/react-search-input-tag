@@ -1,0 +1,54 @@
+
+.ist-div{
+  outline: none;
+  background: gray;
+  position: relative;
+  width: 100%;
+}
+
+.ist-div .ist-input{
+  background: white;
+  border: none;
+  padding: 0.5rem;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.ist-div .ist-ul{
+  padding: 0px;
+  margin: 0px;
+  background: white;
+  color: black;
+  box-shadow: 1px 1px 1px rgba(3,3,3,0.4);
+  position: absolute;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  width: 100%;
+  max-height: 100px;
+}
+.ist-div .ist-ul.hide{
+  display: none;
+}
+
+.ist-div .ist-ul .ist-li{
+  padding: 0.25rem;
+}
+.ist-div .ist-ul .ist-li.active{
+  background-color: #eee;
+  color: black;
+  font-weight: bold;
+}
+
+.ist-div .ist-ul .ist-li:hover{
+  background-color: #eee;
+  color: black;
+  font-weight: bold;
+}
+
+.ist-div .ist-ul .ist-li span.match{
+  color:#3af;
+}
+
+.ist-div .ist-ul .ist-li.not-exist{
+  color: #f77;
+}
