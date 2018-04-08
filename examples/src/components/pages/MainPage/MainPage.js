@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 
 import testData from './testData'
 import NormalPage from 'components/templates/NormalPage'
-// import SearchInputTag from '../../../lib/SearchInputTag'
-import SearchInputTag from 'react-search-input-tag'
+import SearchInputTag from '../../../lib/SearchInputTag'
+// import SearchInputTag from 'react-search-input-tag'
 
 class MainPage extends Component{
   state = {
@@ -51,6 +51,7 @@ class MainPage extends Component{
             value={searchInput1.value}
             itemList={itemList}
             throttle={100}
+            placeholder={'야!'}
             notExist={<span>You can add `Tag` if any user can't find the item</span>}
             onChange={(value) => {
               this.handleChange({ type: 'searchInput1', value})

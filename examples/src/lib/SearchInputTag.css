@@ -1,20 +1,18 @@
 
-.ist-div{
+.sit-div{
   outline: none;
-  background: gray;
   position: relative;
   width: 100%;
 }
 
-.ist-div .ist-input{
-  background: white;
+.sit-div .sit-input{
   border: none;
   padding: 0.5rem;
   width: 100%;
   font-size: 1rem;
 }
 
-.ist-div .ist-ul{
+.sit-div .sit-ul{
   padding: 0px;
   margin: 0px;
   background: white;
@@ -26,29 +24,30 @@
   width: 100%;
   max-height: 100px;
 }
-.ist-div .ist-ul.hide{
+.sit-div .sit-ul.hide{
   display: none;
 }
 
-.ist-div .ist-ul .ist-li{
+.sit-div .sit-ul .sit-li{
   padding: 0.25rem;
 }
-.ist-div .ist-ul .ist-li.active{
+.sit-div .sit-ul .sit-li.active{
   background-color: #eee;
   color: black;
   font-weight: bold;
 }
 
-.ist-div .ist-ul .ist-li:hover{
+.sit-div .sit-ul .sit-li:hover{
   background-color: #eee;
   color: black;
   font-weight: bold;
+  cursor: pointer;
 }
 
-.ist-div .ist-ul .ist-li span.match{
+.sit-div .sit-ul .sit-li span.match{
   color:#3af;
 }
 
-.ist-div .ist-ul .ist-li.not-exist{
+.sit-div .sit-ul .sit-li.not-exist{
   color: #f77;
 }

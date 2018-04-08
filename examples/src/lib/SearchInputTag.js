@@ -77,7 +77,7 @@ class SearchInputTag extends Component{
   makeList = (list) => {
     return list.map((v, index) => (
       <li
-        className={`ist-li ${this.props.liClassName} ${this.state.cursor === index ? 'active' : ''}`}
+        className={`sit-li ${this.props.liClassName} ${this.state.cursor === index ? 'active' : ''}`}
         key={index}
         value={v.id}
         onClick={() => {
@@ -157,7 +157,8 @@ class SearchInputTag extends Component{
       className,
       ulClassName,
       notExist,
-      ...restProps
+      placeholder,
+      ...restProps,
      } = this.props
 
     Object.keys(SearchInputTag.defaultProps).forEach(v => {
@@ -166,7 +167,7 @@ class SearchInputTag extends Component{
     const liFindList = this.makeList(this.state.findList)
     return (
       <div
-        className={`ist-div ${wrapperClassName}`}
+        className={`sit-div ${wrapperClassName}`}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         tabIndex='-1'
@@ -174,16 +175,17 @@ class SearchInputTag extends Component{
         {React.cloneElement(
           InputElement,
           {
-            className: `ist-input ${className}`,
+            className: `sit-input ${className}`,
             type: 'search',
             value: value,
+            placeholder: placeholder,
             onChange: event => this.updateThrottle(event.target.value),
             onKeyDown: this.onKeyDown,
             ...restProps
           }
         )}
         <ul
-          className={`ist-ul ${ulClassName} ${this.state.cursor === -2 ? 'hide' : ''}`}
+          className={`sit-ul ${ulClassName} ${this.state.cursor === -2 ? 'hide' : ''}`}
           ref={(ref) => (this.areaFindList = ref)}
         >
         {
@@ -192,7 +194,7 @@ class SearchInputTag extends Component{
             liFindList
               .concat(
                 <li
-                  className={`ist-li not-exist ${this.props.liClassName}`}
+                  className={`sit-li not-exist ${this.props.liClassName}`}
                   key={liFindList.length}
                 >
                   {notExist}
