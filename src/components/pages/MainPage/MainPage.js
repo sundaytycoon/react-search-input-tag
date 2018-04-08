@@ -40,6 +40,7 @@ class MainPage extends Component{
   render() {
     const { input, itemList } = this.state
     const { searchInput1 } = input
+    console.log(itemList)
     return (
       <NormalPage header={this.header}>
         <h1> getting started `react-input-search` ! </h1>
