@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 
 import testData from './testData'
 import NormalPage from 'components/templates/NormalPage'
-import SearchInputTag from '../../../lib/SearchInputTag'
+// import SearchInputTag from '../../../lib/SearchInputTag'
+import SearchInputTag from 'react-search-input-tag'
 
 class MainPage extends Component{
   state = {
