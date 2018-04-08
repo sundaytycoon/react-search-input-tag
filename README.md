@@ -19,7 +19,7 @@ I recommend you to see [/examples](https://github.com/gotsu/react-search-input-t
     value={value}
     itemList={[{ id: 1, value: 'korea' }, ...itemList]}
     throttle={100}
-    notExist={<span>You can add `Tag` if any user can't find the item</span>}
+    notExist={<span>You can add `Tag` if any user can not find the item</span>}
     onChange={value => {
       this.handleChange({ value })
     }}
@@ -29,7 +29,7 @@ I recommend you to see [/examples](https://github.com/gotsu/react-search-input-t
   />
 ```
 
-# options
+# Options
 
 ``` js
 SearchInputTag.defaultProps = {
