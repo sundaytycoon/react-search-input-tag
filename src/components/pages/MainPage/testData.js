@@ -1,30 +1,30 @@
 export default [
   {
-    label: "red",
-    value: "#f00"
+    value: "red",
+    id: "#f00"
   },
   {
-    label: "green",
-    value: "#0f0"
+    value: "green",
+    id: "#0f0"
   },
   {
-    label: "blue",
-    value: "#00f"
+    value: "blue",
+    id: "#00f"
   },
   {
-    label: "cyan",
-    value: "#0ff"
+    value: "cyan",
+    id: "#0ff"
   },
   {
-    label: "magenta",
-    value: "#f0f"
+    value: "magenta",
+    id: "#f0f"
   },
   {
-    label: "yellow",
-    value: "#ff0"
+    value: "yellow",
+    id: "#ff0"
   },
   {
-    label: "black",
-    value: "#000"
+    value: "black",
+    id: "#000"
   }
 ]

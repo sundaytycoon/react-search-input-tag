@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import './InputSearchText.css'
+import './SearchInputTag.css'
 
-class InputSearchText extends Component{
+class SearchInputTag extends Component{
   state = {
     findList: [],
     cursor: -2, 
@@ -11,7 +11,7 @@ class InputSearchText extends Component{
 
   componentWillMount() {
     const { itemList } = this.props
-    this.setState({ itemList, findList: itemList.map(v => ({ labelEl: v.label, ...v })) })
+    this.setState({ itemList, findList: itemList.map(v => ({ labelEl: v.value, ...v })) })
   }
 
   onKeyDown = (e) => {
@@ -36,28 +36,27 @@ class InputSearchText extends Component{
         }
       }
     } else if (keyCode === 13) { // enter
-      if (this.state.findList.length !== 0 && this.state.cursor !== -2) {
-        this.onSelect(this.state.findList[this.state.cursor].label, this.state.findList[this.state.cursor].value)
+      if (this.state.findList.length !== 0 && this.state.cursor > -1) {
+        this.onSelect(this.state.findList[this.state.cursor].value, this.state.findList[this.state.cursor].id)
       }
     } else if (keyCode === 27) this.onSelect('', '')  // esc
   }
 
-  onSelect = (label, value) => {
-    this.props.onSelect(label, value)
-    this.setState({ cursor: -2, findList: this.findList(label) })
+  onSelect = (value, id) => {
+    this.props.onSelect(value, id)
+    this.setState({ cursor: -2, findList: this.findList(value) })
   }
 
-  onChange = (label) => {
-    this.props.onChange(label)
-    const findList = this.findList(label)
-    const correct = this.props.itemList.filter(v => v.label === label)
+  onChange = (value) => {
+    const findList = this.findList(value)
+    const correct = this.props.itemList.filter(v => v.value === value)
     if (correct.length === 1) {
       this.setState({ cursor: -2, findList })
-      this.props.onSelect(correct[0].label, correct[0].value)
+      this.props.onSelect(correct[0].value, correct[0].id)
       return false
     }
 
-    if (!label) {
+    if (!value) {
       this.setState({ cursor: -2, findList })
       return false
     }
@@ -80,9 +79,9 @@ class InputSearchText extends Component{
       <li
         className={`ist-li ${this.props.liClassName} ${this.state.cursor === index ? 'active' : ''}`}
         key={index}
-        value={v.value}
+        value={v.id}
         onClick={() => {
-          this.onSelect(v.label, v.value)
+          this.onSelect(v.value, v.id)
         }}
       >
         {v.labelEl}
@@ -95,7 +94,7 @@ class InputSearchText extends Component{
       .map((item) => {
         const itemTemp = item
 
-        const labelSpells = itemTemp.label.replace(/\s/g, ' ').split('')
+        const labelSpells = itemTemp.value.replace(/\s/g, ' ').split('')
         const inputSpells = text.replace(/\s/g, ' ').split('')
         let inputsIndex = 0
         const incorrectIndexOfs = []
@@ -143,6 +142,13 @@ class InputSearchText extends Component{
     return result
   }
 
+  updateThrottle = (value) => {
+    this.props.onChange(value)
+    if (this.throttleTimeout) clearTimeout((this.throttleTimeout))
+    this.throttleTimeout = setTimeout(() => {
+      this.onChange(value)
+    }, this.props.throttle)
+  }
   render() {
     const {
       value,
@@ -150,13 +156,14 @@ class InputSearchText extends Component{
       wrapperClassName,
       className,
       ulClassName,
-
+      notExist,
       ...restProps
      } = this.props
 
-    Object.keys(InputSearchText.defaultProps).forEach(v => {
+    Object.keys(SearchInputTag.defaultProps).forEach(v => {
       delete restProps[v]
     })
+    const liFindList = this.makeList(this.state.findList)
     return (
       <div
         className={`ist-div ${wrapperClassName}`}
@@ -170,7 +177,7 @@ class InputSearchText extends Component{
             className: `ist-input ${className}`,
             type: 'search',
             value: value,
-            onChange: event => this.onChange(event.target.value),
+            onChange: event => this.updateThrottle(event.target.value),
             onKeyDown: this.onKeyDown,
             ...restProps
           }
@@ -179,23 +186,39 @@ class InputSearchText extends Component{
           className={`ist-ul ${ulClassName} ${this.state.cursor === -2 ? 'hide' : ''}`}
           ref={(ref) => (this.areaFindList = ref)}
         >
-          {this.makeList(this.state.findList)}
+        {
+          notExist
+          ?
+            liFindList
+              .concat(
+                <li
+                  className={`ist-li not-exist ${this.props.liClassName}`}
+                  key={liFindList.length}
+                >
+                  {notExist}
+                </li>
+              )
+            :
+            liFindList
+        }
         </ul>
       </div>
     )
   }
 }
 
-InputSearchText.defaultProps = {
-  value: '',
-  onSelect: () => { },
-  onChange: () => { },
-  itemList: [],
-  InputElement: <input />,
-
-  onFocus: () => { },
-  onBlur: () => { },
-  onKeyDown: () => { },
+SearchInputTag.defaultProps = {
+  value: '', // value
+  onSelect: () => { }, // onSelect
+  onChange: () => { }, // onChange
+  itemList: [], // search List
+  InputElement: <input />, // default `input` tag
+  placeholder: '',
+  throttle: 200, // setTimeout then execute `onChange`
+  notExist: null,
+  onFocus: () => { }, // when this input focused in
+  onBlur: () => { }, // when this input focused out
+  onKeyDown: () => { }, // when you typed arrow keys
 
   wrapperClassName: '', // wrapper's className
   className: '', // input's className
@@ -203,29 +226,38 @@ InputSearchText.defaultProps = {
   liClassName: '', // li's className
   matchedWordClassName: '', // matched word's className
   unmatchedWordClassName: '', // un-matched word's classNamee
+  notExistClassName: '', // If any user can't find the item on your results, You can show one `li` tag
 }
 
-InputSearchText.propTypes = {
+SearchInputTag.propTypes = {
+  // required
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
   itemList: PropTypes.arrayOf(
     PropTypes.shape({
-      label: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
+      id: PropTypes.string,
     })
   ),
+
+  // not required
+  notExist: PropTypes.element,
   InputElement: PropTypes.element,
+  placeholder: PropTypes.string,
+  throttle: PropTypes.number,
 
   onKeyDown: PropTypes.func,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
+
   wrapperClassName: PropTypes.string,
   className: PropTypes.string,
   ulClassName: PropTypes.string,
   liClassName: PropTypes.string,
   matchedWordClassName: PropTypes.string,
   unmatchedWordClassName: PropTypes.string,
+  notExistClassName: PropTypes.string,
 }
 
-export default InputSearchText
+export default SearchInputTag

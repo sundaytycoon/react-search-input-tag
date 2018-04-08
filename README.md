@@ -1,101 +1,91 @@
-# 아직 npm 버전이 아닙니다.
 
-# react-multiple-page
+# react-search-input-tag
 
-[![Build Status](https://travis-ci.org/gotsu/react-multiple-page.svg?branch=master)](https://travis-ci.org/gotsu/react-multiple-page)
+[![Build Status](https://travis-ci.org/gotsu/react-search-input-tag.svg?branch=master)](https://travis-ci.org/gotsu/react-search-input-tag)
 
-It supports history block and prevent 'Back button'. It will be help when you build form tags in multiple page
+# Advantage
 
-# Installation
+It try to have basic style and customize easier.
+You can find `*className` options.
 
-> npm i --save react-multiple-page
+# Examples
 
-# Usage 
+I recommend you to see [/examples](https://github.com/gotsu/react-search-input-tag/tree/master/examples)
 
-I recommend you to see [/examples](https://github.com/gotsu/react-multiple-page/tree/master/examples)
-
-1. `src/App.js` about [BrowserRouter]
+# Usage
 
 ``` js
-import React, { Fragment } from 'react'
-import { Route, Switch, BrowserRouter } from 'react-router-dom'
-import FormPage from 'components/pages/FormPage'
-
-const customConfimation = (message, callback) => {
-  // ... refer to this Link https://gist.github.com/robertgonzales/e54699212da497740845712f3648d98c
-}
-
-const App = () => (
-  <Fragment>
-    <BrowserRouter getUserConfirmation={customConfimation}>
-      <Switch>
-        {/* ... */}
-        <Route path="/form" component={FormPage} /> 
-      </Switch>
-    </BrowserRouter>
-  </Fragment>
-)
-```
-
-2. `src/components/pages/FormPage` about [using MultiplePageView]
-
-``` js
-import MultiplePageView from 'react-multiple-page'
-
-import Section1 from './Section1'
-import Section2 from './Section2'
-import Section3 from './Section3'
-
-const FormPage = (props) => (
-  <MultiplePageView
-    pages={[Section1, Section2, Section3]}  // isRequired
-    message={"메시지를 작성중입니다 정말 이 페이지를 떠나시겠습니까?"} // isOptionable
-    // when={false} // isOptionable
-    {...whatevers}
-    {...props}
+  <SearchInputTag
+    value={value}
+    itemList={[{ id: 1, value: 'korea' }, ...itemList]}
+    throttle={100}
+    notExist={<span>You can add `Tag` if any user can't find the item</span>}
+    onChange={value => {
+      this.handleChange({ value })
+    }}
+    onSelect={(value, id) => {
+      this.handleChange({ value, id })
+    }}
   />
-)
 ```
 
-3. `src/components/pages/FormPage/Section1.js`
+# options
 
 ``` js
-import React from 'react'
+SearchInputTag.defaultProps = {
+  value: '', // value
+  onSelect: () => { }, // onSelect
+  onChange: () => { }, // onChange
+  itemList: [], // search List
+  InputElement: <input />, // default `input` tag
+  placeholder: '', // tag's placeholder
+  throttle: 200, // setTimeout then execute `onChange`
+  notExist: null, // If any user can't find the item on your results, You can show one `li` tag
+  onFocus: () => { }, // when this input focused in
+  onBlur: () => { }, // when this input focused out
+  onKeyDown: () => { }, // when you typed arrow keys
 
-export default const Section1 = (props) => {
-  const { pageController } = props // from `react-multiple-page` property. that have a role control about this lib
-
-  return (
-    <div className="page">
-      <div className="form-control">
-        <h1> Hello, I am Section1 </h1>
-      </div>
-      <div className="form-control">
-        <button className="half-button" onClick={pageController.prevPage}>Prev</button>
-        <button className="half-button" onClick={pageController.nextPage}>Next</button>
-      </div>
-    </div>
-  )
+  wrapperClassName: '', // wrapper's className
+  className: '', // input's className
+  ulClassName: '', // ul's className
+  liClassName: '', // li's className
+  matchedWordClassName: '', // matched word's className
+  unmatchedWordClassName: '', // un-matched word's classNamee
+  notExistClassName: '', // notExist's className
 }
+
+SearchInputTag.propTypes = {
+  // required
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  itemList: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      id: PropTypes.string,
+    })
+  ),
+
+  // not required
+  notExist: PropTypes.element,
+  InputElement: PropTypes.element,
+  placeholder: PropTypes.string,
+  throttle: PropTypes.number,
+
+  onKeyDown: PropTypes.func,
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
+
+  wrapperClassName: PropTypes.string,
+  className: PropTypes.string,
+  ulClassName: PropTypes.string,
+  liClassName: PropTypes.string,
+  matchedWordClassName: PropTypes.string,
+  unmatchedWordClassName: PropTypes.string,
+  notExistClassName: PropTypes.string,
+}
+
 ```
-
-# Options
-
-1. when: ([ boolean | func ])
-2. message: ([ string | func ])
-3. pages: ([ Array: ...Components])
-
-# Transfer controller to Section Component
-
-1. pageController: { nextPage, prevPage, goPage, when, message }
-
-# Specific Dependencies
-
-1. react-router v4
-
-# To do
-
-https://github.com/gotsu/react-multiple-page/issues/2
 
 # License
 
@@ -107,9 +97,3 @@ https://github.com/gotsu/react-multiple-page/issues/2
 - Any PR, Thanks.
 
 Anyway, I'm happy to help you
-
-
-# References
-
- 1. history block GIST [robertgonzales/App.jsx](https://gist.github.com/robertgonzales/e54699212da497740845712f3648d98c)
- 2. history block on [ReactTrainning/history](https://github.com/ReactTraining/history#blocking-transitions)

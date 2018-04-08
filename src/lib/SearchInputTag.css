@@ -48,3 +48,7 @@
 .ist-div .ist-ul .ist-li span.match{
   color:#3af;
 }
+
+.ist-div .ist-ul .ist-li.not-exist{
+  color: #f77;
+}
