@@ -91,6 +91,10 @@ SearchInputTag.propTypes = {
 
 [WTFPL](http://www.wtfpl.net/)
 
+# Others...
+
+- [react-multiple-page](https://www.npmjs.com/package/react-multiple-page)
+
 # Get more feedback
 
 - If you got an error using my library, Please email me or leave an issue. I'll fix ya immediately.
