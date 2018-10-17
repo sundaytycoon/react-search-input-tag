@@ -90,6 +90,9 @@ class SearchInputTag extends Component{
 
   findList = (text) => {
     if (!this.props.itemList.length) return []
+    if (!this.props.label) return this.props.itemList.map(v => ({ ...v, labelEl: v.value }))
+    // TODO: 1. props에 값을 직접 넣는바람에 redux 스토어에도 데이터가 들어가게 됨 이거 수정...필요...
+    // TODO: 2. 입력값, list에 display되는 이름이 별도로 설정할 수 있도록.
     const list = this.props.itemList
       .map((item) => {
         const itemTemp = item
@@ -143,12 +146,17 @@ class SearchInputTag extends Component{
   }
 
   updateThrottle = (value) => {
-    this.props.onChange(value)
-    if (this.throttleTimeout) clearTimeout((this.throttleTimeout))
-    this.throttleTimeout = setTimeout(() => {
+    if (this.props.throttle === 0) {
       this.onChange(value)
-    }, this.props.throttle)
+    } else {
+      this.props.onChange(value)
+      if (this.throttleTimeout) clearTimeout((this.throttleTimeout))
+      this.throttleTimeout = setTimeout(() => {
+        this.onChange(value)
+      }, this.props.throttle)
+    }
   }
+
   render() {
     const {
       value,
@@ -165,6 +173,7 @@ class SearchInputTag extends Component{
       delete restProps[v]
     })
     const liFindList = this.makeList(this.state.findList)
+    // TODO: 주요 DOM 노드는 refs로 넣어서 값이 참조될 수 있도록 한다.
     return (
       <div
         className={`sit-div ${wrapperClassName}`}
@@ -216,7 +225,7 @@ SearchInputTag.defaultProps = {
   itemList: [], // search List
   InputElement: <input />, // default `input` tag
   placeholder: '',
-  throttle: 200, // setTimeout then execute `onChange`
+  throttle: 0, // setTimeout then execute `onChange`
   notExist: null,
   onFocus: () => { }, // when this input focused in
   onBlur: () => { }, // when this input focused out
