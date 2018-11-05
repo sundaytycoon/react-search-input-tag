@@ -151,12 +151,10 @@ class SearchInputTag extends Component{
     if (this.props.throttle === 0) {
       this.props.onChange(value)
       this.onChange(value)
-      console.log('have no setTimeout')
     } else {
       this.props.onChange(value)
       if (this.throttleTimeout) clearTimeout((this.throttleTimeout))
       this.throttleTimeout = setTimeout(() => {
-        console.log('it has setTimeout')
         this.onChange(value)
       }, this.props.throttle)
     }
@@ -230,7 +228,7 @@ SearchInputTag.defaultProps = {
   itemList: [], // search List
   InputElement: <input />, // default `input` tag
   placeholder: '',
-  throttle: 200, // setTimeout then execute `onChange`
+  throttle: 0, // setTimeout then execute `onChange`
   notExist: null,
   onFocus: () => { }, // when this input focused in
   onBlur: () => { }, // when this input focused out
