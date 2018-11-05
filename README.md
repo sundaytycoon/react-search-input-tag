@@ -39,7 +39,7 @@ SearchInputTag.defaultProps = {
   itemList: [], // search List
   InputElement: <input />, // default `input` tag
   placeholder: '', // tag's placeholder
-  throttle: 200, // setTimeout then execute `onChange`
+  throttle: 0, // setTimeout then execute `onChange`
   notExist: null, // If any user can't find the item on your results, You can show one `li` tag
   onFocus: () => { }, // when this input focused in
   onBlur: () => { }, // when this input focused out

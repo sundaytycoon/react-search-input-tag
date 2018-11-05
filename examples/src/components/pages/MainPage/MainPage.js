@@ -42,7 +42,7 @@ class MainPage extends Component{
     const { searchInput1 } = input
     return (
       <NormalPage header={this.header}>
-        <h1> getting started `react-input-search` ! </h1>
+        <h1> getting started `react-search-input-tag` ! </h1>
 
         <div className="form-control">
           <SearchInputTag
@@ -50,8 +50,8 @@ class MainPage extends Component{
             name="searchInput1"
             value={searchInput1.value}
             itemList={itemList}
-            throttle={100}
-            placeholder={'야!'}
+            throttle={0}
+            placeholder={'What color do you like?'}
             notExist={<span>You can add `Tag` if any user can't find the item</span>}
             onChange={(value) => {
               this.handleChange({ type: 'searchInput1', value})
